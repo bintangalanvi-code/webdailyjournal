@@ -119,22 +119,42 @@
     </tbody>
 </table>
 
-<?php
-$total = $conn->query("SELECT * FROM gallery")->num_rows;
+<?php 
+$sql1 = "SELECT * FROM gallery";
+$hasil1 = $conn->query($sql1); 
+$total_records = $hasil1->num_rows;
 ?>
-
-<p>Total gallery : <?= $total; ?></p>
-
-<nav>
+<p>Total gallery : <?php echo $total_records; ?></p>
+<nav class="mb-2">
     <ul class="pagination justify-content-end">
-        <?php
-        $jumlah_page = ceil($total / $limit);
-        for ($i = 1; $i <= $jumlah_page; $i++) {
-            $active = ($hlm == $i) ? ' active' : '';
-            echo '<li class="page-item halaman'.$active.'" id="'.$i.'">
-                    <a class="page-link" href="#">'.$i.'</a>
-                  </li>';
+    <?php
+        $jumlah_page = ceil($total_records / $limit);
+        $jumlah_number = 1; //jumlah halaman ke kanan dan kiri dari halaman yang aktif
+        $start_number = ($hlm > $jumlah_number)? $hlm - $jumlah_number : 1;
+        $end_number = ($hlm < ($jumlah_page - $jumlah_number))? $hlm + $jumlah_number : $jumlah_page;
+
+        if($hlm == 1){
+            echo '<li class="page-item disabled"><a class="page-link" href="#">First</a></li>';
+            echo '<li class="page-item disabled"><a class="page-link" href="#"><span aria-hidden="true">&laquo;</span></a></li>';
+        } else {
+            $link_prev = ($hlm > 1)? $hlm - 1 : 1;
+            echo '<li class="page-item halaman" id="1"><a class="page-link" href="#">First</a></li>';
+            echo '<li class="page-item halaman" id="'.$link_prev.'"><a class="page-link" href="#"><span aria-hidden="true">&laquo;</span></a></li>';
         }
-        ?>
+
+        for($i = $start_number; $i <= $end_number; $i++){
+            $link_active = ($hlm == $i)? ' active' : '';
+            echo '<li class="page-item halaman '.$link_active.'" id="'.$i.'"><a class="page-link" href="#">'.$i.'</a></li>';
+        }
+
+        if($hlm == $jumlah_page){
+            echo '<li class="page-item disabled"><a class="page-link" href="#"><span aria-hidden="true">&raquo;</span></a></li>';
+            echo '<li class="page-item disabled"><a class="page-link" href="#">Last</a></li>';
+        } else {
+        $link_next = ($hlm < $jumlah_page)? $hlm + 1 : $jumlah_page;
+            echo '<li class="page-item halaman" id="'.$link_next.'"><a class="page-link" href="#"><span aria-hidden="true">&raquo;</span></a></li>';
+            echo '<li class="page-item halaman" id="'.$jumlah_page.'"><a class="page-link" href="#">Last</a></li>';
+        }
+    ?>
     </ul>
 </nav>
