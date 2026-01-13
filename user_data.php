@@ -22,19 +22,19 @@ $hasil = $conn->query($sql);
 <tbody>
 <?php while($row = $hasil->fetch_assoc()){ ?>
 <tr>
-    <td><?= $no++ ?></td>
-    <td><?= $row['username'] ?></td>
+    <td><?php echo $no++; ?></td>
+    <td><?php echo $row['username']; ?></td>
     <td>
         <?php if ($row['foto'] != '' && file_exists("img/".$row['foto'])) { ?>
-            <img src="img/<?= $row['foto'] ?>" width="80">
+            <img src="img/<?php echo $row['foto']; ?>" width="80">
         <?php } ?>
     </td>
     <td>
-        <a href="#" class="badge bg-success" data-bs-toggle="modal" data-bs-target="#edit<?= $row['id'] ?>">Edit</a>
-        <a href="#" class="badge bg-danger" data-bs-toggle="modal" data-bs-target="#hapus<?= $row['id'] ?>">Hapus</a>
+        <a href="#" class="badge bg-success" data-bs-toggle="modal" data-bs-target="#edit<?php echo $row['id']; ?>">Edit</a>
+        <a href="#" class="badge bg-danger" data-bs-toggle="modal" data-bs-target="#hapus<?php echo $row['id']; ?>">Hapus</a>
 
         <!-- MODAL EDIT -->
-        <div class="modal fade" id="edit<?= $row['id'] ?>" data-bs-backdrop="static">
+        <div class="modal fade" id="edit<?php echo $row['id']; ?>" data-bs-backdrop="static">
             <div class="modal-dialog">
                 <div class="modal-content text-dark">
                     <form method="post" enctype="multipart/form-data">
@@ -43,12 +43,12 @@ $hasil = $conn->query($sql);
                             <button class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
                         <div class="modal-body">
-                            <input type="hidden" name="id" value="<?= $row['id'] ?>">
-                            <input type="hidden" name="foto_lama" value="<?= $row['foto'] ?>">
+                            <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
+                            <input type="hidden" name="foto_lama" value="<?php echo $row['foto']; ?>">
 
                             <div class="mb-3">
                                 <label>Username</label>
-                                <input type="text" name="username" value="<?= $row['username'] ?>" class="form-control" required>
+                                <input type="text" name="username" value="<?php echo $row['username']; ?>" class="form-control" required>
                             </div>
 
                             <div class="mb-3">
@@ -72,7 +72,7 @@ $hasil = $conn->query($sql);
         </div>
 
         <!-- MODAL HAPUS -->
-        <div class="modal fade" id="hapus<?= $row['id'] ?>" data-bs-backdrop="static">
+        <div class="modal fade" id="hapus<?php echo $row['id']; ?>" data-bs-backdrop="static">
             <div class="modal-dialog">
                 <div class="modal-content text-dark">
                     <form method="post">
@@ -81,9 +81,9 @@ $hasil = $conn->query($sql);
                             <button class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
                         <div class="modal-body">
-                            Yakin hapus user <b><?= $row['username'] ?></b>?
-                            <input type="hidden" name="id" value="<?= $row['id'] ?>">
-                            <input type="hidden" name="foto" value="<?= $row['foto'] ?>">
+                            Yakin hapus user <b><?php echo $row['username']; ?></b>?
+                            <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
+                            <input type="hidden" name="foto" value="<?php echo $row['foto']; ?>">
                         </div>
                         <div class="modal-footer">
                             <button class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
@@ -110,7 +110,7 @@ $total_records = $hasil1->num_rows;
     <ul class="pagination justify-content-end">
     <?php
         $jumlah_page = ceil($total_records / $limit);
-        $jumlah_number = 1; //jumlah halaman ke kanan dan kiri dari halaman yang aktif
+        $jumlah_number = 1;
         $start_number = ($hlm > $jumlah_number)? $hlm - $jumlah_number : 1;
         $end_number = ($hlm < ($jumlah_page - $jumlah_number))? $hlm + $jumlah_number : $jumlah_page;
 
@@ -132,7 +132,7 @@ $total_records = $hasil1->num_rows;
             echo '<li class="page-item disabled"><a class="page-link" href="#"><span aria-hidden="true">&raquo;</span></a></li>';
             echo '<li class="page-item disabled"><a class="page-link" href="#">Last</a></li>';
         } else {
-        $link_next = ($hlm < $jumlah_page)? $hlm + 1 : $jumlah_page;
+            $link_next = ($hlm < $jumlah_page)? $hlm + 1 : $jumlah_page;
             echo '<li class="page-item halaman" id="'.$link_next.'"><a class="page-link" href="#"><span aria-hidden="true">&raquo;</span></a></li>';
             echo '<li class="page-item halaman" id="'.$jumlah_page.'"><a class="page-link" href="#">Last</a></li>';
         }

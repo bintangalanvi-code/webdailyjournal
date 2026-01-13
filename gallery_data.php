@@ -22,32 +22,32 @@
         while ($row = $hasil->fetch_assoc()) {
         ?>
             <tr>
-                <td><?= $no++ ?></td>
+                <td><?php echo $no++; ?></td>
                 <td>
-                    <strong><?= $row["judul"] ?></strong>
-                    <br>pada : <?= $row["tanggal"] ?>
-                    <br>oleh : <?= $row["username"] ?>
+                    <strong><?php echo $row["judul"]; ?></strong>
+                    <br>pada : <?php echo $row["tanggal"]; ?>
+                    <br>oleh : <?php echo $row["username"]; ?>
                 </td>
                 <td>
                     <?php if ($row["gambar"] != '' && file_exists('img/' . $row["gambar"])) { ?>
-                        <img src="img/<?= $row["gambar"] ?>" width="100">
+                        <img src="img/<?php echo $row["gambar"]; ?>" width="100">
                     <?php } ?>
                 </td>
                 <td>
                     <a href="#" class="badge rounded-pill text-bg-success"
                        data-bs-toggle="modal"
-                       data-bs-target="#modalEdit<?= $row["id"] ?>">
+                       data-bs-target="#modalEdit<?php echo $row["id"]; ?>">
                         <i class="bi bi-pencil"></i>
                     </a>
 
                     <a href="#" class="badge rounded-pill text-bg-danger"
                        data-bs-toggle="modal"
-                       data-bs-target="#modalHapus<?= $row["id"] ?>">
+                       data-bs-target="#modalHapus<?php echo $row["id"]; ?>">
                         <i class="bi bi-x-circle"></i>
                     </a>
 
                     <!-- MODAL EDIT -->
-                    <div class="modal fade" id="modalEdit<?= $row["id"] ?>" data-bs-backdrop="static">
+                    <div class="modal fade" id="modalEdit<?php echo $row["id"]; ?>" data-bs-backdrop="static">
                         <div class="modal-dialog">
                             <div class="modal-content text-dark">
                                 <div class="modal-header">
@@ -57,12 +57,12 @@
 
                                 <form method="post" enctype="multipart/form-data">
                                     <div class="modal-body">
-                                        <input type="hidden" name="id" value="<?= $row["id"] ?>">
+                                        <input type="hidden" name="id" value="<?php echo $row["id"]; ?>">
 
                                         <div class="mb-3">
                                             <label>Judul</label>
                                             <input type="text" name="judul" class="form-control"
-                                                   value="<?= $row["judul"] ?>" required>
+                                                   value="<?php echo $row["judul"]; ?>" required>
                                         </div>
 
                                         <div class="mb-3">
@@ -73,9 +73,9 @@
                                         <div class="mb-3">
                                             <label>Gambar Lama</label><br>
                                             <?php if ($row["gambar"] != '' && file_exists('img/' . $row["gambar"])) { ?>
-                                                <img src="img/<?= $row["gambar"] ?>" width="100">
+                                                <img src="img/<?php echo $row["gambar"]; ?>" width="100">
                                             <?php } ?>
-                                            <input type="hidden" name="gambar_lama" value="<?= $row["gambar"] ?>">
+                                            <input type="hidden" name="gambar_lama" value="<?php echo $row["gambar"]; ?>">
                                         </div>
                                     </div>
 
@@ -89,7 +89,7 @@
                     </div>
 
                     <!-- MODAL HAPUS -->
-                    <div class="modal fade" id="modalHapus<?= $row["id"] ?>" data-bs-backdrop="static">
+                    <div class="modal fade" id="modalHapus<?php echo $row["id"]; ?>" data-bs-backdrop="static">
                         <div class="modal-dialog">
                             <div class="modal-content text-dark">
                                 <div class="modal-header">
@@ -99,9 +99,9 @@
 
                                 <form method="post">
                                     <div class="modal-body">
-                                        Yakin hapus gallery <strong><?= $row["judul"] ?></strong>?
-                                        <input type="hidden" name="id" value="<?= $row["id"] ?>">
-                                        <input type="hidden" name="gambar" value="<?= $row["gambar"] ?>">
+                                        Yakin hapus gallery <strong><?php echo $row["judul"]; ?></strong>?
+                                        <input type="hidden" name="id" value="<?php echo $row["id"]; ?>">
+                                        <input type="hidden" name="gambar" value="<?php echo $row["gambar"]; ?>">
                                     </div>
 
                                     <div class="modal-footer">
@@ -129,7 +129,7 @@ $total_records = $hasil1->num_rows;
     <ul class="pagination justify-content-end">
     <?php
         $jumlah_page = ceil($total_records / $limit);
-        $jumlah_number = 1; //jumlah halaman ke kanan dan kiri dari halaman yang aktif
+        $jumlah_number = 1;
         $start_number = ($hlm > $jumlah_number)? $hlm - $jumlah_number : 1;
         $end_number = ($hlm < ($jumlah_page - $jumlah_number))? $hlm + $jumlah_number : $jumlah_page;
 
@@ -151,7 +151,7 @@ $total_records = $hasil1->num_rows;
             echo '<li class="page-item disabled"><a class="page-link" href="#"><span aria-hidden="true">&raquo;</span></a></li>';
             echo '<li class="page-item disabled"><a class="page-link" href="#">Last</a></li>';
         } else {
-        $link_next = ($hlm < $jumlah_page)? $hlm + 1 : $jumlah_page;
+            $link_next = ($hlm < $jumlah_page)? $hlm + 1 : $jumlah_page;
             echo '<li class="page-item halaman" id="'.$link_next.'"><a class="page-link" href="#"><span aria-hidden="true">&raquo;</span></a></li>';
             echo '<li class="page-item halaman" id="'.$jumlah_page.'"><a class="page-link" href="#">Last</a></li>';
         }
