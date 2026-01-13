@@ -173,7 +173,7 @@ include "koneksi.php";
       <div class="container">
         <h1 class="fw-bold display-4 text-start pb-3">Profil Mahasiswa</h1>
         <div class="d-flex flex-column flex-md-row align-items-center justify-content-start">
-          <img src="img/WO.jpg" class="rounded-circle mb-3 mb-md-0 me-md-4" width="180" height="180">
+          <img src="img/wo.jpg" class="rounded-circle mb-3 mb-md-0 me-md-4" width="180" height="180">
           <div class="card change-a text-center text-md-start" style="max-width: 700px;">
             <div class="card-body">
               <h5 class="card-title fw-bold text-dark">Bintang Al Anvi</h5>
